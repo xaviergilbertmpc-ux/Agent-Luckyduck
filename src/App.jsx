@@ -465,7 +465,7 @@ export default function AgentLuckyDuck() {
       : "";
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": "import.meta.env.VITE_ANTHROPIC_KEY", "anthropic-version": "2023-06-01" },
         body: JSON.stringify({
@@ -499,7 +499,7 @@ export default function AgentLuckyDuck() {
     const prompt = `J'uploade ces nouveaux rapports : ${fileNames}. Fais une analyse complète : KPIs clés, alertes prioritaires, top 3 actions immédiates, et projection CA. Sois précis et chiffré.`;
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-api-key": "import.meta.env.VITE_ANTHROPIC_KEY", "anthropic-version": "2023-06-01" },
         body: JSON.stringify({
