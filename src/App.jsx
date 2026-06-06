@@ -467,7 +467,7 @@ export default function AgentLuckyDuck() {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json", , "anthropic-version": "2023-06-01" },
+        headers: { "Content-Type": "application/json", "anthropic-version": "2023-06-01" },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
@@ -501,7 +501,7 @@ export default function AgentLuckyDuck() {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json", , "anthropic-version": "2023-06-01" },
+        headers: { "Content-Type": "application/json", "anthropic-version": "2023-06-01" },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
