@@ -511,7 +511,7 @@ export default function AgentLuckyDuck() {
       });
 
       const data = await response.json();
-      const text = data.content?.[0]?.text || "Erreur d'analyse.";
+      const text = data.content[0].text || "Erreur d'analyse.";
       setStreamText(text);
       setMessages(prev => [...prev,
         { role: "user", content: `Analyse des rapports : ${fileNames}` },
@@ -927,3 +927,4 @@ export default function AgentLuckyDuck() {
     </>
   );
 }
+
