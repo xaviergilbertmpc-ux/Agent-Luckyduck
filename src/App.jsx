@@ -478,7 +478,7 @@ export default function AgentLuckyDuck() {
       });
 
       const data = await response.json();
-      const reply = data.content?.[0]?.text || "Erreur de réponse.";
+      const reply = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : (data.error ? data.error.messa
 
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
       setTimeout(scrollToBottom, 100);
