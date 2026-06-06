@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const body = {
-    model: "claude-sonnet-4-5-20251022",
+    model: "claude-haiku-4-5-20251001",
     max_tokens: 1000,
     system: req.body.system || "",
     messages: req.body.messages || []
