@@ -146,6 +146,7 @@ export default function App() {
   const [rapportFile, setRapportFile] = useState(null);
   const [rapportAnalyse, setRapportAnalyse] = useState("");
   const [rapportLoading, setRapportLoading] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const chatEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -206,14 +207,16 @@ export default function App() {
     return alerts;
   };
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   const styles = {
-    app: { display: "flex", height: "100vh", background: "#0f1521", color: "#e8e4dc", fontFamily: "'Segoe UI', sans-serif", overflow: "hidden" },
-    sidebar: { width: "220px", background: "#0a0f1a", borderRight: "1px solid #1e2a3a", display: "flex", flexDirection: "column", flexShrink: 0 },
-    logo: { padding: "24px 20px 16px", borderBottom: "1px solid #1e2a3a" },
+    app: { display: "flex", height: "100vh", background: "#0f1521", color: "#e8e4dc", fontFamily: "'Segoe UI', sans-serif", overflow: "hidden", flexDirection: "row" },
+    sidebar: { width: "240px", background: "#282252", borderRight: "1px solid #1e2a4a", display: "flex", flexDirection: "column", flexShrink: 0 },
+    logo: { padding: "20px 16px 16px", borderBottom: "1px solid #1e2a4a", background: "#282252" },
     logoTitle: { fontSize: "18px", fontWeight: "700", color: "#f5c842", letterSpacing: "0.5px" },
-    logoSub: { fontSize: "11px", color: "#6b8aaa", marginTop: "2px" },
+    logoSub: { fontSize: "11px", color: "#8888cc", marginTop: "2px" },
     nav: { flex: 1, padding: "12px 0", overflowY: "auto" },
-    navItem: (active) => ({ display: "flex", alignItems: "center", gap: "10px", padding: "10px 20px", cursor: "pointer", fontSize: "13px", color: active ? "#f5c842" : "#8aabb0", background: active ? "rgba(245,200,66,0.08)" : "transparent", borderLeft: active ? "3px solid #f5c842" : "3px solid transparent", transition: "all 0.15s" }),
+    navItem: (active) => ({ display: "flex", alignItems: "center", gap: "10px", padding: "10px 20px", cursor: "pointer", fontSize: "13px", color: active ? "#f5c842" : "#aaaadd", background: active ? "rgba(245,200,66,0.10)" : "transparent", borderLeft: active ? "3px solid #f5c842" : "3px solid transparent", transition: "all 0.15s" }),
     main: { flex: 1, overflow: "auto", padding: "28px 32px" },
     title: { fontSize: "22px", fontWeight: "700", color: "#f5c842", marginBottom: "6px" },
     subtitle: { fontSize: "13px", color: "#6b8aaa", marginBottom: "24px" },
@@ -245,7 +248,7 @@ export default function App() {
           <div>
             <div style={styles.title}>Dashboard LuckyDuck 🦆</div>
             <div style={styles.subtitle}>Vue d'ensemble Amazon + Meta Ads</div>
-            <div style={styles.grid4}>
+            <div className="ld-grid4" style={styles.grid4}>
               {[
                 { label: "CA Amazon", val: "~12 000€", sub: "/mois — pic 18K€", color: "yellow" },
                 { label: "Avis Amazon", val: "4,7/5 ⭐", sub: "Note produits FR", color: "green" },
@@ -259,7 +262,7 @@ export default function App() {
                 </div>
               ))}
             </div>
-            <div style={styles.grid2}>
+            <div className="ld-grid2" style={styles.grid2}>
               <div style={styles.card}>
                 <div style={styles.cardTitle}>Statut canaux</div>
                 {[
@@ -351,7 +354,7 @@ export default function App() {
           <div>
             <div style={styles.title}>Campagnes Amazon 📦</div>
             <div style={styles.subtitle}>Suivi performance et recommandations</div>
-            <div style={styles.grid4}>
+            <div className="ld-grid4" style={styles.grid4}>
               {[
                 { label: "ACoS cible", val: "< 25%", sub: "Coût pub / CA" },
                 { label: "Taux conversion cible", val: "> 12%", sub: "Sessions → achats" },
@@ -771,26 +774,64 @@ export default function App() {
 
   return (
     <div style={styles.app}>
-      <div style={styles.sidebar}>
+      {/* BARRE MOBILE EN HAUT */}
+      <style>{`
+        @media (max-width: 767px) {
+          .ld-sidebar { display: none !important; }
+          .ld-sidebar.open { display: flex !important; position: fixed; top: 52px; left: 0; right: 0; bottom: 0; z-index: 100; width: 100% !important; }
+          .ld-topbar { display: flex !important; }
+          .ld-main { padding: 16px !important; }
+          .ld-grid4 { grid-template-columns: 1fr 1fr !important; }
+          .ld-grid2 { grid-template-columns: 1fr !important; }
+        }
+        @media (min-width: 768px) {
+          .ld-topbar { display: none !important; }
+          .ld-sidebar { display: flex !important; }
+        }
+        .ld-topbar { display: none; align-items: center; justify-content: space-between; background: #282252; padding: 0 16px; height: 52px; position: fixed; top: 0; left: 0; right: 0; z-index: 200; border-bottom: 1px solid #1e2a4a; }
+        .ld-burger { background: none; border: none; color: #f5c842; font-size: 24px; cursor: pointer; padding: 8px; }
+        .ld-mobile-content { padding-top: 52px; flex: 1; overflow: auto; }
+        @media (min-width: 768px) { .ld-mobile-content { padding-top: 0; } }
+      `}</style>
+
+      {/* TOPBAR MOBILE */}
+      <div className="ld-topbar">
+        <div style={{ color: "#f5c842", fontWeight: "700", fontSize: "16px" }}>🦆 LuckyDuck</div>
+        <div style={{ color: "#aaaadd", fontSize: "12px" }}>{NAV_ITEMS.find(n => n.id === activeSection)?.label}</div>
+        <button className="ld-burger" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? "✕" : "☰"}
+        </button>
+      </div>
+
+      {/* SIDEBAR */}
+      <div className={`ld-sidebar${menuOpen ? " open" : ""}`} style={styles.sidebar}>
         <div style={styles.logo}>
-          <div style={styles.logoTitle}>🦆 LuckyDuck</div>
-          <div style={styles.logoSub}>Agent Amazon + Meta Ads</div>
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjAwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwLCA1KSBzY2FsZSgwLjU1KSI+CiAgICA8cGF0aCBkPSJNNDAgNjAgUTIwIDYwIDE1IDQ1IFExMCAzMCAyNSAyMCBRMzUgMTIgNTAgMTggTDU1IDE1IFE2NSA4IDc1IDE1IFE4MCAyMCA3NSAyOCBMNzAgMzAgUTc4IDM4IDcyIDUyIFE2NiA2NCA1MCA2NCBaIiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgPGNpcmNsZSBjeD0iNjIiIGN5PSIxOCIgcj0iMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNSIvPgogICAgPHBhdGggZD0iTTcyIDE2IEw4NSAxMyBMODMgMTkgWiIgZmlsbD0iI0Y1QTYyMyIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNNzIgMjAgTDg1IDIyIEw4MyAxOSBaIiBmaWxsPSIjRjVBNjIzIiBzdHJva2U9Im5vbmUiLz4KICAgIDxsaW5lIHgxPSIzOCIgeTE9IjY0IiB4Mj0iMzgiIHkyPSI3NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxsaW5lIHgxPSIzOCIgeTE9Ijc1IiB4Mj0iMjgiIHkyPSI3OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxsaW5lIHgxPSIzOCIgeTE9Ijc1IiB4Mj0iNDgiIHkyPSI3OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8L2c+CiAgPHRleHQgeD0iNjAiIHk9IjQ1IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IndoaXRlIiBsZXR0ZXItc3BhY2luZz0iMSI+TFVDS1k8dHNwYW4gZmlsbD0iI0Y1QTYyMyI+RFVDSzwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IHg9IjYwIiB5PSI2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjgiIGZpbGw9IndoaXRlIiBsZXR0ZXItc3BhY2luZz0iMC41Ij5MRSBDT05GT1JUIERVIERVVkVUIDx0c3BhbiBmaWxsPSIjRjVBNjIzIj5TQU5TPC90c3Bhbj4gUExVTUUgQU5JTUFMRTwvdGV4dD4KPC9zdmc+"
+            alt="LuckyDuck"
+            style={{ width: "210px", display: "block" }}
+          />
+          <div style={{ fontSize: "11px", color: "#8888cc", marginTop: "6px" }}>Agent Amazon + Meta Ads</div>
         </div>
         <nav style={styles.nav}>
           {NAV_ITEMS.map(item => (
-            <div key={item.id} style={styles.navItem(activeSection === item.id)} onClick={() => setActiveSection(item.id)}>
+            <div key={item.id} style={styles.navItem(activeSection === item.id)} onClick={() => { setActiveSection(item.id); setMenuOpen(false); }}>
               <span>{item.icon}</span>
               <span>{item.label}</span>
             </div>
           ))}
         </nav>
-        <div style={{ padding: "16px 20px", borderTop: "1px solid #1e2a3a", fontSize: "11px", color: "#4a6a80" }}>
+        <div style={{ padding: "16px 20px", borderTop: "1px solid #1e2a4a", background: "#282252", fontSize: "11px", color: "#8888cc" }}>
           agent-luckyduck.vercel.app<br />Juin 2026
         </div>
       </div>
-      <main style={styles.main}>
-        {renderSection()}
-      </main>
+
+      {/* CONTENU PRINCIPAL */}
+      <div className="ld-mobile-content" style={{ flex: 1, overflow: "auto" }}>
+        <main className="ld-main" style={styles.main}>
+          {renderSection()}
+        </main>
+      </div>
     </div>
   );
 }
