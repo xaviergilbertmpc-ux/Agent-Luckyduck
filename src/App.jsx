@@ -94,23 +94,26 @@ const NAV_ITEMS = [
 ];
 
 const PLANNING_META = [
-  { date: "Lun 9 juin", type: "organique", visuel: "V11 — Caneton sur oreiller 🦆", caption: "Il garde ses plumes. Vous gardez le confort. 🦆", plateforme: "Instagram + Facebook", objectif: "Ouverture émotionnelle — notoriété", budget: "—" },
-  { date: "Mar 10 juin", type: "payant", visuel: "V8 + V6 (A/B test)", caption: "Le réveil est plus doux... / Le confort du duvet...", plateforme: "Facebook + Instagram", objectif: "Trafic — audience froide CSP+ 30-55 ans", budget: "5€/jour" },
-  { date: "Mer 11 juin", type: "organique", visuel: "V8 — Le réveil est plus doux", caption: "T7 — Certaines choses sont mieux sans plumes...", plateforme: "Instagram", objectif: "Preuve sociale Amazon 4,7/5", budget: "—" },
-  { date: "Ven 13 juin", type: "organique", visuel: "V2 — Femme lifestyle", caption: "T2 — Vous aimez les couettes gonflantes ?", plateforme: "Instagram", objectif: "Engagement féminin", budget: "—" },
-  { date: "Lun 16 juin", type: "organique", visuel: "V5 — Homme endormi", caption: "T6 — Texte nuit réparateur", plateforme: "Instagram + Facebook", objectif: "Cible masculine", budget: "—" },
-  { date: "Mar 17 juin", type: "payant", visuel: "V11 caneton (si engagement S1)", caption: "Il garde ses plumes. Vous gardez le confort. 🦆", plateforme: "Instagram + Facebook", objectif: "TOFU — notoriété / activation si V11 a performé", budget: "5€/jour" },
-  { date: "Mar 17 juin", type: "payant", visuel: "V4 + V5 retargeting", caption: "T4 — Une sensation de légèreté...", plateforme: "Facebook + Instagram", objectif: "MOFU — visiteurs 30 derniers jours", budget: "5€/jour" },
-  { date: "Mer 18 juin", type: "organique", visuel: "V9 — Homme discret", caption: "À poil, mais sans plumes 😄", plateforme: "Instagram", objectif: "Humour + viralité (version safe)", budget: "—" },
-  { date: "Ven 20 juin", type: "organique", visuel: "V1 — Produit lit hôtel", caption: "T9 — fibre recyclée iLOFT®...", plateforme: "Facebook", objectif: "Éducation marque + certification Vegan", budget: "—" },
-  { date: "Lun 23 juin", type: "organique", visuel: "Carrousel produits (à créer)", caption: "Choisissez votre confort — lien site", plateforme: "Instagram + Facebook", objectif: "Trafic vers luckyduck.ooo", budget: "—" },
-  { date: "Mer 25 juin", type: "organique", visuel: "V2 + témoignage client", caption: "Avis client réel + histoire marque", plateforme: "Instagram + Facebook", objectif: "Preuve sociale", budget: "—" },
-  { date: "Ven 27 juin", type: "payant", visuel: "Meilleur visuel S1-S2", caption: "—", plateforme: "Facebook + Instagram", objectif: "TOFU — doubler budget winner → 10€/jour", budget: "10€/jour" },
-  { date: "Ven 27 juin", type: "organique", visuel: "Coulisses LuckyDuck / Abeil", caption: "Fabriqué en France, pensé pour vous", plateforme: "Facebook", objectif: "Authenticité Made in France", budget: "—" },
-  { date: "Lun 30 juin", type: "organique", visuel: "V4 — Femme endormie", caption: "Préparez votre literie pour la rentrée", plateforme: "Instagram", objectif: "Conversion — angle rentrée", budget: "—" },
-  { date: "Mar 1 juil", type: "payant", visuel: "V6 — Confort + note 4,7/5", caption: "T4 — abandon panier", plateforme: "Facebook + Instagram", objectif: "BOFU — abandon panier", budget: "3€/jour" },
-  { date: "Mer 2 juil", type: "organique", visuel: "Best performer S1-S2", caption: "Relance angle différent", plateforme: "Instagram + Facebook", objectif: "Conversion", budget: "—" },
-  { date: "Ven 4 juil", type: "organique", visuel: "Post éducatif", caption: "Pourquoi choisir une couette vegan ?", plateforme: "Facebook", objectif: "Notoriété + SEO social", budget: "—" },
+  // SEMAINE 1
+  { date: "Lun 9 juin", type: "organique", visuel: "V11 — Caneton sur oreiller 🦆", caption: "Il garde ses plumes. Vous gardez le confort. 🦆", plateforme: "Instagram + Facebook", objectif: "Viralité / Émotion — OUVERTURE 🦆", budget: "—", kpi: "Partages > 20", statut: "🦆 OUVERTURE" },
+  { date: "Mar 10 juin", type: "payant", visuel: "V8 + V6 — A/B test", caption: "T7 vs T2 — test automatique Meta", plateforme: "Instagram + Facebook", objectif: "Notoriété — audience froide CSP+ 30–55 ans", budget: "5€/jour", kpi: "CPM < 15€ · CTR > 1,5%", statut: "🚀 Lancer" },
+  { date: "Mer 11 juin", type: "organique", visuel: "V8 — Le réveil est plus doux", caption: "Le réveil est plus doux quand les canards gardent leurs plumes.", plateforme: "Instagram + Facebook", objectif: "Notoriété", budget: "—", kpi: "Portée > 500", statut: "À publier" },
+  { date: "Ven 13 juin", type: "organique", visuel: "V2 — Mon produit de beauté", caption: "Le confort d'un oreiller ne devrait pas dépendre d'une plume.", plateforme: "Instagram", objectif: "Engagement féminin", budget: "—", kpi: "Likes > 50", statut: "À publier" },
+  // SEMAINE 2
+  { date: "Lun 16 juin", type: "organique", visuel: "V7 — Main sur oreiller", caption: "Certaines choses sont mieux sans plumes. Comme votre oreiller.", plateforme: "Instagram", objectif: "Engagement", budget: "—", kpi: "Portée > 400", statut: "À planifier" },
+  { date: "Mar 17 juin", type: "payant", visuel: "Best A/B S1 + V4 retargeting", caption: "T6 corrigé — retargeting visiteurs luckyduck.ooo 30 derniers jours", plateforme: "Instagram + Facebook", objectif: "Conversion MOFU — visiteurs 30j", budget: "10€/jour", kpi: "ROAS > 2x · CPC < 1€", statut: "📊 Analyser S1 d'abord" },
+  { date: "Mer 18 juin", type: "organique", visuel: "V9 — À poil, mais sans plumes", caption: "Une sensation de légèreté. Un confort enveloppant. Et aucune plume animale.", plateforme: "Instagram + Facebook", objectif: "Viralité", budget: "—", kpi: "Partages > 10", statut: "À planifier" },
+  { date: "Ven 20 juin", type: "organique", visuel: "V10 — Aussi léger qu'un nuage", caption: "Le confort du duvet n'a pas besoin de plumes.", plateforme: "Facebook", objectif: "Éducation marque / cible éthique", budget: "—", kpi: "Commentaires > 5", statut: "À planifier" },
+  // SEMAINE 3
+  { date: "Lun 23 juin", type: "organique", visuel: "V1 — Le confort et l'éthique", caption: "Tout le confort du duvet. Sans plume animale.", plateforme: "Instagram", objectif: "Notoriété", budget: "—", kpi: "Clics > 30", statut: "À planifier" },
+  { date: "Mar 24 juin", type: "payant", visuel: "Best performer S1+S2", caption: "Doubler budget sur meilleur ROAS — couper le perdant", plateforme: "Instagram + Facebook", objectif: "Conversion — optimisation", budget: "10€/jour", kpi: "ROAS > 2,5x", statut: "📊 Optimiser" },
+  { date: "Mer 25 juin", type: "organique", visuel: "V4 — Femme endormie + avis client", caption: "Une sensation de légèreté. Un confort enveloppant.", plateforme: "Instagram + Facebook", objectif: "Preuve sociale", budget: "—", kpi: "Saves > 20", statut: "À planifier" },
+  { date: "Ven 27 juin", type: "organique", visuel: "V5 — Homme endormi", caption: "Une sensation de légèreté. Un confort enveloppant.", plateforme: "Facebook", objectif: "Engagement masculin", budget: "—", kpi: "Portée > 400", statut: "À planifier" },
+  // SEMAINE 4
+  { date: "Lun 30 juin", type: "organique", visuel: "V8 — Relance angle rentrée", caption: "Le réveil est plus doux quand les canards gardent leurs plumes.", plateforme: "Instagram", objectif: "Conversion — angle rentrée", budget: "—", kpi: "Clics > 40", statut: "À planifier" },
+  { date: "Mar 1 juil", type: "payant", visuel: "V6 — Abandon panier", caption: "T2 — Audience : ajout panier sans achat · message de rappel doux", plateforme: "Instagram + Facebook", objectif: "Conversion BOFU — abandon panier", budget: "15€/jour", kpi: "ROAS > 3x · CPA < 30€", statut: "🎯 Lancer" },
+  { date: "Mer 2 juil", type: "organique", visuel: "V6 — Relance preuve sociale", caption: "Vous aimez les couettes gonflantes et moelleuses ? Nous aussi.", plateforme: "Instagram + Facebook", objectif: "Conversion", budget: "—", kpi: "Clics > 35", statut: "À planifier" },
+  { date: "Ven 4 juil", type: "organique", visuel: "Post éducatif — Pourquoi vegan ?", caption: "Le duvet n'a plus le monopole du confort. Notre fibre iLOFT®...", plateforme: "Facebook", objectif: "Notoriété + SEO social", budget: "—", kpi: "Partages > 15", statut: "À planifier" },
 ];
 
 const PREVISIONS = [
@@ -416,22 +419,26 @@ export default function App() {
                     <th style={styles.th}>Date</th>
                     <th style={styles.th}>Type</th>
                     <th style={styles.th}>Visuel</th>
-                    <th style={styles.th}>Caption / Texte</th>
+                    <th style={styles.th}>Message clé</th>
                     <th style={styles.th}>Plateforme</th>
                     <th style={styles.th}>Objectif</th>
-                    <th style={styles.th}>Budget</th>
+                    <th style={styles.th}>Budget/j</th>
+                    <th style={styles.th}>KPI cible</th>
+                    <th style={styles.th}>Statut</th>
                   </tr>
                 </thead>
                 <tbody>
                   {PLANNING_META.map((row, i) => (
                     <tr key={i} style={row.type === "organique" ? styles.rowOrga : styles.rowPayant}>
                       <td style={{ ...styles.td, fontWeight: "600", whiteSpace: "nowrap" }}>{row.date}</td>
-                      <td style={styles.td}><span style={styles.badge(row.type === "organique" ? "blue" : "yellow")}>{row.type === "organique" ? "🔵 Organique" : "🟡 Payant"}</span></td>
+                      <td style={styles.td}><span style={styles.badge(row.type === "organique" ? "blue" : "yellow")}>{row.type === "organique" ? "🔵 Org." : "🟡 Payant"}</span></td>
                       <td style={{ ...styles.td, fontSize: "12px", color: "#c8d8e8" }}>{row.visuel}</td>
-                      <td style={{ ...styles.td, fontSize: "11px", color: "#6b8aaa", maxWidth: "200px" }}>{row.caption}</td>
+                      <td style={{ ...styles.td, fontSize: "11px", color: "#6b8aaa", maxWidth: "180px" }}>{row.caption}</td>
                       <td style={{ ...styles.td, fontSize: "12px" }}>{row.plateforme}</td>
                       <td style={{ ...styles.td, fontSize: "12px", color: "#8aabb0" }}>{row.objectif}</td>
-                      <td style={{ ...styles.td, fontWeight: "600", color: "#f5c842" }}>{row.budget}</td>
+                      <td style={{ ...styles.td, fontWeight: "600", color: "#f5c842", whiteSpace: "nowrap" }}>{row.budget}</td>
+                      <td style={{ ...styles.td, fontSize: "11px", color: "#34c759" }}>{row.kpi}</td>
+                      <td style={{ ...styles.td, fontSize: "11px", whiteSpace: "nowrap" }}>{row.statut}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -443,7 +450,8 @@ export default function App() {
                 • <strong style={{ color: "#f5c842" }}>Accroche forte</strong> sur la 1ère ligne (s'affiche avant "voir plus")<br />
                 • Terminer par un <strong style={{ color: "#f5c842" }}>CTA clair</strong> : "Découvrez sur luckyduck.ooo" ou "Lien en bio"<br />
                 • <strong style={{ color: "#f5c842" }}>5 à 8 hashtags</strong> : #literiebio #vegan #sommeil #couettevegan #luckyduck #madeinfrance #iLOFT #literiefrance<br />
-                • Longueur : 3 à 5 lignes Instagram, un peu plus Facebook
+                • Longueur : 3 à 5 lignes Instagram, un peu plus Facebook<br /><br />
+                <strong style={{ color: "#f5c842" }}>Budget juin total : ~280€</strong> · 12 posts organiques · 4 campagnes payantes · ROAS cible 3x fin juin
               </div>
             </div>
           </div>
