@@ -144,6 +144,7 @@ export default function App() {
   const [kpisMeta, setKpisMeta] = useState({ semaine: "", cpm: "", ctr: "", cpc: "", roas: "", depense: "", ca: "" });
   const [kpiSaved, setKpiSaved] = useState(false);
   const [rapportFile, setRapportFile] = useState(null);
+  const [rapportFiles, setRapportFiles] = useState([]);
   const [rapportAnalyse, setRapportAnalyse] = useState("");
   const [rapportLoading, setRapportLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -174,27 +175,29 @@ export default function App() {
   }, [input, messages, loading]);
 
   const analyserRapport = useCallback(async () => {
-    if (!rapportFile) return;
+    const files = rapportFiles.length > 0 ? rapportFiles : (rapportFile ? [rapportFile] : []);
+    if (files.length === 0) return;
     setRapportLoading(true);
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const contenu = e.target.result;
-      const prompt = `Voici les données d'un rapport Amazon ou Meta pour LuckyDuck. Analyse-les et donne : 1) les KPIs clés, 2) les alertes éventuelles, 3) les 3 actions prioritaires.\n\nDonnées :\n${contenu.substring(0, 4000)}`;
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ system: SYSTEM_PROMPT, messages: [{ role: "user", content: prompt }] }),
-        });
-        const data = await res.json();
-        setRapportAnalyse(data?.content?.[0]?.text || "Erreur d'analyse.");
-      } catch {
-        setRapportAnalyse("Erreur de connexion.");
-      }
-      setRapportLoading(false);
-    };
-    reader.readAsText(rapportFile);
-  }, [rapportFile]);
+    try {
+      const contenus = await Promise.all(files.map(f => new Promise((res) => {
+        const reader = new FileReader();
+        reader.onload = (e) => res(`--- Fichier : ${f.name} ---\n${e.target.result.substring(0, 3000)}`);
+        reader.readAsText(f);
+      })));
+      const contenuTotal = contenus.join("\n\n");
+      const prompt = `Voici les données de ${files.length} rapport(s) Amazon/Meta pour LuckyDuck. Analyse-les et donne : 1) les KPIs clés par fichier, 2) les alertes éventuelles, 3) les 3 actions prioritaires.\n\nDonnées :\n${contenuTotal}`;
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ system: SYSTEM_PROMPT, messages: [{ role: "user", content: prompt }] }),
+      });
+      const data = await res.json();
+      setRapportAnalyse(data?.content?.[0]?.text || "Erreur d'analyse.");
+    } catch {
+      setRapportAnalyse("Erreur de connexion.");
+    }
+    setRapportLoading(false);
+  }, [rapportFiles, rapportFile]);
 
   const evaluerKpis = () => {
     const { cpm, ctr, cpc, roas } = kpisMeta;
@@ -736,14 +739,14 @@ export default function App() {
             <div style={styles.card}>
               <div style={styles.cardTitle}>Importer un rapport (CSV ou TXT)</div>
               <div style={{ fontSize: "13px", color: "#6b8aaa", marginBottom: "14px" }}>
-                Accepte les exports CSV Amazon (Business Report, FBA) et Meta Ads.
+                Accepte plusieurs fichiers simultanément — CSV Amazon (Business Report, FBA) et Meta Ads. Maintenez Ctrl (Windows) ou Cmd (Mac) pour sélectionner plusieurs fichiers.
               </div>
-              <input type="file" accept=".csv,.txt,.xlsx" ref={fileInputRef} style={{ display: "none" }} onChange={e => setRapportFile(e.target.files[0])} />
+              <input type="file" accept=".csv,.txt,.xlsx" ref={fileInputRef} style={{ display: "none" }} multiple onChange={e => { setRapportFiles(Array.from(e.target.files)); setRapportFile(e.target.files[0] || null); }} />
               <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
                 <button style={styles.btnGhost} onClick={() => fileInputRef.current.click()}>
-                  {rapportFile ? `📄 ${rapportFile.name}` : "Choisir un fichier"}
+                  {rapportFiles.length > 1 ? `📄 ${rapportFiles.length} fichiers sélectionnés` : rapportFile ? `📄 ${rapportFile.name}` : "Choisir un ou plusieurs fichiers"}
                 </button>
-                {rapportFile && <button style={styles.btn} onClick={analyserRapport} disabled={rapportLoading}>{rapportLoading ? "Analyse en cours…" : "Analyser avec l'agent 🦆"}</button>}
+                {(rapportFiles.length > 0 || rapportFile) && <button style={styles.btn} onClick={analyserRapport} disabled={rapportLoading}>{rapportLoading ? "Analyse en cours…" : `Analyser ${rapportFiles.length > 1 ? rapportFiles.length + " fichiers" : "avec l'agent"} 🦆`}</button>}
               </div>
             </div>
             {rapportAnalyse && (
